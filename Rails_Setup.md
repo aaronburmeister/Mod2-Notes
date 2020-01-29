@@ -1,6 +1,6 @@
 # How to set up a Rails API  
 
-This readme assumes that you have the proper environment set up with `rvm`, Rails, and Ruby installed.  
+This readme assumes that you have the proper environment set up with `rvm`, Rails, and Ruby installed. It also assumes that you have used ActiveRecord in Mod 1 of the Flatiron School Curriculum.  
 
 ### Step 1: Creating a new Rails API  
 
@@ -36,8 +36,17 @@ To generate a controller file, type into the command line:
 
 This will generate our controller. It needs to be the plural of whatever your model name is. That's because the controller is in charge of dealing with all of the models of that name and accesses the database looking for a table that will generate with that plural. For example, if I have a Pirate model and a pirates table, my controller will need to be called 'Pirates_Controller' and not 'Pirate_Controller'. This is a Rails convention.  
 
-Press enter and voila! We should have a controller. We've got all the files we need to make our API function. Time to dig in to the actual code with an editor.  
+Press enter and voila! We should have a controller. We've got all the files we need to make our API function. Time to dig in to the actual code with an editor. I use VS Code so my command is `code .`. Substitute 'code' for whatever editor you use to look at the files.  
 
-### Step 3: Create the route  
+### Step 3: Creating the route  
 
-If you haven't opened the editor until this point, you will notice there are a metric butt-load of files that Rails generated.
+If you haven't opened the editor until this point, you will notice there are a metric butt-load of files that Rails generated. We can ignore most of these - we are only interested in the files that we generated.  
+
+First we need to set up the route so that our API properly redirects us to the correct controller. Inside the `config` folder is a file called `routes.rb`. Open that in your editor. You'll notice there are no routes. Let's change this so that when people go to your server they will find what they are looking for.  
+
+Add the following to your `routes.rb` file, inside the method it is providing:  
+
+`resources :model_plural`  
+
+This will provide routes for every kind of request for your model: GET, POST, PUT, PATCH, DELETE. You can see this by typing `rails routes` in the command line.
+
