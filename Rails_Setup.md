@@ -38,7 +38,15 @@ This will generate our controller. It needs to be the plural of whatever your mo
 
 Press enter and voila! We should have a controller. We've got all the files we need to make our API function. Time to dig in to the actual code with an editor. I use VS Code so my command is `code .`. Substitute 'code' for whatever editor you use to look at the files.  
 
-### Step 3: Creating the route  
+### Step 3: Running the Migration  
+
+This is a simple step if you've used ActiveRecord before. We configured our table in Step 2, so now we just need to run a simple command to create the table. Run the following in the command line:
+
+`rails db:migrate`  
+
+This will create our table. That's it! We've got our model and table created. Now how do we access what is stored in our table?  
+
+### Step 4: Creating the route  
 
 If you haven't opened the editor until this point, you will notice there are a metric butt-load of files that Rails generated. We can ignore most of these - we are only interested in the files that we generated.  
 
@@ -46,7 +54,38 @@ First we need to set up the route so that our API properly redirects us to the c
 
 Add the following to your `routes.rb` file, inside the method it is providing:  
 
-`resources :model_plural`  
+`resources :plural_model_name`  
 
-This will provide routes for every kind of request for your model: GET, POST, PUT, PATCH, DELETE. You can see this by typing `rails routes` in the command line.
+This will provide routes for every kind of request for your model: GET, POST, PUT, PATCH, DELETE. You can see this by typing `rails routes` in the command line.  
 
+Check out the output from an example project I'm doing:
+![](images/routes_example.jpeg)  
+
+In the middle you can see the url you need to go to in order to access that data. On the right-hand side there are controller actions. These are methods we can add in order for that url to function. Let's do that so we can finally access our data.  
+
+### Step 5: Creating the controller actions  
+
+Go to `app/controllers` and edit the controller you created; it should be called `plural_model_name_controller.rb`.  
+Let's add `#index`. Inside the controller class, add the following:  
+
+```ruby
+def index
+  render :json model_name.all
+end
+```  
+
+This method will print all instances of the model in json format to the screen when you visit the url (also called an "endpoint"). You can add similar methods depending on what you want each endpoint to do in your program.  
+
+### Step 6: Create seeds  
+
+If you don't create seeds, then you won't see anything on the page, even if your code is correct. So in the `db/seeds.rb` file, create some instances of your class before you run the server, and run `rails db:seed` to populate your table.  
+
+### Step 7: Run your server  
+
+All that is left is to see your API in action. In the command line, type:  
+
+`rails s`  
+
+This starts your server. Open a browser and go to the URL it tells you to. The default is "http://localhost:3000" and append the route url for whichever methods you have set up. For example, this tutorial only covers adding index (which is a default landing page for your model) so just go to "http://localhost:3000/plural_model_name".  
+
+You should see your seeded data in json format! Congrats!
